@@ -103,11 +103,11 @@ function getFileBasedOnTime(channel,time,callback){
   sh2BeforeTime = moment('14:00', format),
   sh2AfterTime = moment('18:00', format);
   if (time.isBetween(sh1BeforeTime, sh1AfterTime)) {
-    if(channel == "ch2_p") channel = 'ch2_sh1'
+    if(channel == "ch2_p") channel = 'ch2_sh1'; app.listToShow = 1;
     // if(channel == "ch3_p") channel = 'ch3_sh1'
   }
   if (time.isBetween(sh2BeforeTime, sh2AfterTime)) {
-    if(channel == "ch2_p") channel = 'ch2_sh2';
+    if(channel == "ch2_p") channel = 'ch2_sh2'; app.listToShow = 2;
     // if(channel == "ch3_p") channel = 'ch3_sh2';
   }  
 

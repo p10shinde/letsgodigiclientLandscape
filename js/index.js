@@ -62,6 +62,8 @@ app.masterPlanInterval;
 
 app.isuserloggedin = false;
 
+app.listToShow = 1;
+
 var URL = "..";
 
 window.onload = function(){
@@ -375,6 +377,10 @@ window.onload = function(){
 				clearTimeout(app.secondChannelInterval);
 				if(!(Object.keys(secondChannelData).length === 0 && secondChannelData.constructor === Object)){
 						console.log('channel 2 updated')
+						$("#contentList li").removeClass('ellip-line-active')
+						$.map($("#contentList li"),function(key,val){
+							if(key.innerText == secondChannelData.resName.split("_")[0]) $(key).addClass('ellip-line-active')
+						})
 						if(getResType(secondChannelData.resName) == "image"){
 							$("." + app.visibleCampaign + " .contentHolder2").empty();
 							$("." + app.visibleCampaign + " .contentHolder2").append(app.imageElements.image2);
@@ -643,6 +649,8 @@ window.onload = function(){
 	    //       	initializeThirdChannel();
      //  	});
 
+     	var listItem1 = "";
+		var listItem2 = "";
 	    firebase.firestore().collection("ch2_sh1").doc(app.groupName).collection('data')
 	      .onSnapshot(function(querySnapshot) {
 	        if(!app.checkIfUserIsLoggedIn() && !app.ifLoginRequested){
@@ -652,8 +660,15 @@ window.onload = function(){
 	          secondllSH1 = new CircularList();
 		            querySnapshot.forEach(function(doc) {
 		               value = doc.data();
+		               if(typeof(value.resName.split("_")[0]) != 'undefined')
+		              		listItem1 += "<li>" + value.resName.split("_")[0] + "</li> "
 		               secondllSH1.add(value.resName, value.duration);
 		            });
+	            if(app.listToShow == 1){
+		            $("#contentList").empty()
+		          	$("#contentList").append(listItem1);
+		          	$("#contentList li").addClass('ellip-line');
+		        }
                 console.log("Initializing Channel 2 shared1 ...=>" + querySnapshot.size);
 	    });
 
@@ -663,17 +678,19 @@ window.onload = function(){
 	        	app.ifLoginRequested = true;
 			    app.authorizeUser();
 			  }
-			  var listItem = "";
-			  listItem = "<li>heelo.jpg</li><li>aksd.jpg</li><li>kwehfiwjef.jpg</li>"
+			  // listItem = "<li>heelo.jpg</li><li>aksd.jpg</li><li>kwehfiwjef.jpg</li>"
 	          secondllSH2 = new CircularList();
 	          		querySnapshot.forEach(function(doc) {
 	              		value = doc.data();
-	              		listItem += "<li>" + value + "</li>"
+	              		if(typeof(value.resName.split("_")[0]) != 'undefined')
+		              		listItem2 += "<li>" + value.resName.split("_")[0] + "</li>"
 	              		secondllSH2.add(value.resName, value.duration);
 	        		});
-	          	$("#contentList").empty()
-	          	$("#contentList").append(listItem);
-	          	$("#contentList li").addClass('ellip-line');
+	          	if(app.listToShow == 2){
+		          	$("#contentList").empty()
+		          	$("#contentList").append(listItem2);
+		          	$("#contentList li").addClass('ellip-line');
+	          	}
 
 
               	console.log("Initializing Channel 2 shared2...=>" + querySnapshot.size);

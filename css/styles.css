@@ -180,17 +180,33 @@ video{
 }
 
 
-#contentListContainer{
-  position: fixed;
-    right: 0;
-    top: 6%;
-    z-index: 1;
+#contentListContainer ul{
+      /*right: 0;
+    width: 100%;
+    left: 1%;
+    position: relative;*/
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
+#contentListContainer li{
+
+float: left;
+margin-left: 3px;
+height: 18px;
+}
 /*ellipsis plugin*/
-.ellip {
+/*.ellip {
   display: block;
   height: 100%;
+  color: black;
+  background-color: #fff !important;
+}
+.ellipUl{
+  padding: 0
 }
  
 .ellip-line {
@@ -198,9 +214,10 @@ video{
     text-overflow: ellipsis;
     white-space: nowrap;
     word-wrap: normal;
-    max-width: 65%;
+    max-width: 100%;
 }
- 
+
+ */
 .ellip,
 .ellip-line {
   position: relative;
@@ -208,7 +225,9 @@ video{
 }
 
 
-
+.ellip-line-active{
+  background: #b9b9b9;
+}
 
 
 /* Large desktops and laptops */
